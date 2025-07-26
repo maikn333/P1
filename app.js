@@ -53,39 +53,4 @@
     row.cells[0].textContent = index + 1; // ลำดับที่ 1, 2, 3...
   });
 }
-    function downloadPDF() {
-  const element = document.getElementById('quote-content');
-  const opt = {
-    margin:       0.3,
-    filename:     `ใบเสนอราคา_${new Date().toLocaleDateString("th-TH")}.pdf`,
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'A4', orientation: 'portrait' }
-  };
-
-  html2pdf().set(opt).from(element).save();
-}
-function downloadPDF() {
-  const element = document.getElementById('quote-content');
-
-  // ซ่อนปุ่มชั่วคราว
-  const buttons = element.querySelectorAll('.no-print');
-  buttons.forEach(btn => btn.style.display = 'none');
-
-  //  รอ 0.5 วิ แล้วแปลง PDF
-  setTimeout(() => {
-    const opt = {
-      margin:       0.3,
-      filename:     `ใบเสนอราคา_${new Date().toLocaleDateString("th-TH")}.pdf`,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'in', format: 'A4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save().then(() => {
-      // แสดงปุ่มคืนหลังแปลงเสร็จ
-      buttons.forEach(btn => btn.style.display = '');
-    });
-
-  }, 500);
-}
+    
