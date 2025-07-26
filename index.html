@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ใบเสนอราคา</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    input[type="number"] { width: 60px; }
+    .btn { margin-top: 10px; padding: 6px 12px; }
+
+    /* ซ่อนปุ่มตอนพิมพ์ */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+ <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    input[type="number"] { width: 60px; }
+    .btn { margin-top: 10px; padding: 6px 12px; }
+    .header { text-align: center; margin-bottom: 20px; }
+    .logo { max-height: 100px; }
+    .info { text-align: center; margin-top: 10px; }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="quote-content">
+  <!-- ส่วนหัว -->
+  <div class="header">
+    <img src="ppp.jpg" class="logo" alt="โลโก้ร้าน">
+    <h2>ร้านเครื่องกรองน้ำชุมแพวอเตอร์</h2>
+    <div class="info">
+      <div>125/2 หมู่3 บ้านไผ่กุดหิน ตำบลไชยสอ อำเภอชุมแพ จังหวัดขอนแก่น 40130</div>
+      <div>โทร: 091-861-1138</div>
+      <div>วันที่ออกใบเสนอราคา: <span id="quote-date"></span></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>ใบเสนอราคา</h3>
+  
+  <table id="quotation-table">
+    <thead>
+      <tr>
+     <th>ลำดับ</th>
+     <th>รายการ</th>
+     <th>รายละเอียด</th> 
+     <th>จำนวน</th>
+     <th>ราคาต่อหน่วย</th>
+     <th>ราคารวม</th>
+     <th class="no-print">ลบ</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+    </tbody>
+  </table>
+
+  <button class="btn no-print" onclick="addRow()">เพิ่มรายการ</button>
+
+  <h3>รวมทั้งหมด: <span id="total">0.00</span> บาท</h3>
+</div>
+  <button class="btn no-print" onclick="window.print()">พิมพ์ใบเสนอราคา</button>
+  <button class="btn no-print" onclick="downloadPDF()">ดาวน์โหลดใบเสนอราคา</button>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
