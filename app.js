@@ -1,7 +1,5 @@
 // กำหนดวันที่อัตโนมัติ
-    document.getElementById("quote-date").textContent = new Date().toLocaleDateString("th-TH", {
-      year: 'numeric', month: 'long', day: 'numeric'
-    });
+    document.getElementById("quote-date").value = new Date().toISOString().slice(0, 10);
 
     let rowCount = 0;
 
@@ -12,12 +10,11 @@
 
       row.innerHTML = `
     <td>${rowCount}</td>
-        <td><input type="text" placeholder="ชื่อสินค้า"></td>
-        <td><textarea placeholder="รายละเอียดสินค้า" rows="2" style="width: 100%; resize: vertical;"></textarea></td>
-        <td><input type="number" value="" min="1" oninput="updateTotal()"></td>
-        <td><input type="number" value="" min="0" oninput="updateTotal()"></td>
-        <td class="subtotal">0.00</td>
-        <td class="no-print"><button onclick="removeRow(this)">ลบ</button></td>
+    <td><input type="text" placeholder="ชื่อสินค้า" style="width: 100%;"></td>
+    <td><input type="number" value="1" min="1" oninput="updateTotal()"></td>
+    <td><input type="number" value="0" min="0" oninput="updateTotal()"></td>
+    <td class="subtotal">0.00</td>
+    <td class="no-print"><button onclick="removeRow(this)">ลบ</button></td>
 `;
 
       tbody.appendChild(row);
@@ -33,10 +30,10 @@ function updateTotal() {
   let total = 0;
 
   rows.forEach(row => {
-    const qty = row.cells[3].querySelector("input").valueAsNumber || 0;
-    const price = row.cells[4].querySelector("input").valueAsNumber || 0;
+    const qty = row.cells[2].querySelector("input").valueAsNumber || 0;
+    const price = row.cells[3].querySelector("input").valueAsNumber || 0;
     const subtotal = qty * price;
-    row.cells[5].textContent = formatNumberWithComma(subtotal);
+    row.cells[4].textContent = formatNumberWithComma(subtotal);
     total += subtotal;
   });
 
@@ -103,4 +100,24 @@ function convertNumberToThaiText(number) {
 
   return result;
 }
- 
+ const phoneInput = document.getElementById('phone');
+
+phoneInput.addEventListener('input', function(e) {
+  let value = e.target.value;
+  // ลบทุกอย่างที่ไม่ใช่ตัวเลขออก
+  value = value.replace(/\D/g, '');
+  
+  // ตัดความยาวไม่เกิน 10 ตัว (ถ้าต้องการ)
+  if (value.length > 10) {
+    value = value.slice(0, 10);
+  }
+
+  // แบ่งใส่ขีด format 3-3-4
+  if (value.length > 6) {
+    value = value.replace(/(\d{3})(\d{3})(\d{1,4})/, '$1-$2-$3');
+  } else if (value.length > 3) {
+    value = value.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+  }
+
+  e.target.value = value;
+});
