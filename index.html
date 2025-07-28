@@ -23,18 +23,29 @@
     th { background-color: #f0f0f0; }
     input[type="number"] { width: 60px; }
     .btn { margin-top: 10px; padding: 6px 12px; }
-    .header { text-align: center; margin-bottom: 20px; }
-    .logo { max-height: 100px; }
-    .info { text-align: center; margin-top: 10px; }
+    .header {   display: flex;
+      justify-content: center;    /* จัดให้อยู่กลางแนวนอน */
+      align-items: center;        /* จัดให้อยู่กลางแนวตั้ง */
+      gap: 50px;                  /* ระยะห่างโลโก้กับข้อความ */
+      text-align: left;
+      margin-bottom: 20px; }
+    .logo { padding: 0;max-height: 80px; display: block; text-align: left }
     @media print {
-      .no-print {
-        display: none !important;
-      }
-    }
-   @media (max-width: 768px) {
-  
+  input, textarea, select,btn no-print {
+    border: none !important;  /* ลบกรอบ */
+    box-shadow: none !important;
+    background: transparent !important; /* พื้นหลังโปร่งใส */
   }
-input, textarea {
+    .no-print {
+      display: none !important;
+    }
+    textarea {
+      resize: none;
+    }
+}
+    @media (max-width: 768px) {
+      }
+    input, textarea {
     width: 100%;
     box-sizing: border-box;
     box-sizing: border-box;
@@ -42,26 +53,121 @@ input, textarea {
     font-family: inherit;
     font-size: 14px;
     padding: 5px;}
+    .fonttext {
+      font-size: 13px;
+      padding-top: 0px;
+      margin: 5px;
+    }
+    .fonttexth1 {
+      font-size: 18px;
+      padding-top: 0px;
+      margin: 5px;
+    }
+    .quote-info {
+  text-align: right;
+  margin-top: -80px;
+  margin-right: 20px;
+  font-size: 14px;
+}
 
+.quote-info input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+  padding: 2px 5px;
+  width: 130px;
+  outline: none;
+  background-color: transparent;
+}
+.customer-info-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.left-info, .right-info {
+  width: 34%;
+  font-size: 14px;
+}
+
+.customer-info-section input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 4px 6px;
+  font-size: 14px;
+  width: 70%;
+  outline: none;
+  background-color: transparent;
+  margin-bottom: 8px;
+}
+.short-input {
+  width: 50px;
+}
+
+.center-input {
+  text-align: center;
+  padding: 4px 0;
+}
+#approval-section input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  padding: 4px 2px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.signature-line {
+  margin-top: 40px;
+  border-bottom: 1px solid black;
+  height: 40px;
+  font-style: italic;
+  color: gray;
+  line-height: 40px;
+}
   </style>
 </head>
 <body>
-
   <!-- ส่วนหัว -->
   <div class="header">
     <img src="ppp.jpg" class="logo" alt="โลโก้ร้าน">
-    <h2>ร้านเครื่องกรองน้ำชุมแพวอเตอร์</h2>
-    <div class="info">
-      <div>125/2 หมู่3 บ้านไผ่กุดหิน ตำบลไชยสอ อำเภอชุมแพ จังหวัดขอนแก่น 40130</div>
-      <div>โทร: 091-861-1138</div>
-      <div>วันที่ออกใบเสนอราคา: <span id="quote-date"></span></div>
-    </div>
+    <div class="fonttext">
+    <h3 class="fonttexth1">ร้านเครื่องกรองน้ำชุมแพวอเตอร์</h3>
+      <p class="fonttext" >125/2 หมู่3 บ้านไผ่กุดหิน ตำบลไชยสอ อำเภอชุมแพ จังหวัดขอนแก่น 40130</p>
+      <p class="fonttext">โทร: 091-861-1138</p>
+      </div>
   </div>
 
-  <hr>
+  <br>
 
-  <h3>ใบเสนอราคา</h3>
+  <h2 style=text-align:center>ใบเสนอราคา</h2>
   
+  <br>
+  
+  <div class="quote-info">
+  <label><strong>เลขที่:</strong>
+    <input type="text" id="quote-number" placeholder="QT-xxxxxxx">
+  </label>
+  <br>
+  <label><strong>วันที่:</strong>
+    <input type="date" id="quote-date">
+  </label>
+</div>
+  <div class="customer-info-section">
+  <div class="left-info">
+    <label>ชื่อผู้ติดต่อ: <input type="text" placeholder="นายสมชาย"></label><br>
+    <label>ชื่อบริษัท: <input type="text" placeholder="บริษัท ABC จำกัด"></label><br>
+    <label>โทร: <input type="text" placeholder="081-234-5678"></label>
+  </div>
+
+  <div class="right-info">
+    <label>กำหนดส่ง: <input type="date"style="width: 115px;"></label><br>
+    <label>ยืนยันราคาภายใน: <input type="number" placeholder="7" style="width: 40px"class="short-input center-input" > วัน</label>
+  </div>
+</div>
+</table>
+  </div>
   <table id="quotation-table">
     <thead>
       <tr>
@@ -77,11 +183,34 @@ input, textarea {
     <tbody id="table-body">
     </tbody>
   </table>
+  <tr>
+  <td colspan="7">
+    <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; padding: 8px;">
+      <div><strong>รวม:</strong> <span id="thai-text-total">ศูนย์บาทถ้วน</span></div>
+      <div><strong>รวมเป็นเงิน:</strong> <span id="total">0.00</span> บาท</div>
+    </div>
+  </td>
+</tr>
 
   <button class="btn no-print" onclick="addRow()">เพิ่มรายการ</button>
 
-  <h3>รวมทั้งหมด: <span id="total">0.00</span> บาท</h3>
+  
 </div>
+<div id="approval-section" style="margin-top: 40px; display: flex; justify-content: space-between;">
+  <div style="width: 45%; text-align: center;">
+    <label for="approverName" style="display: block; margin-top: 6px;">ผู้อนุมัติซื้อ</label>
+    <div class="signature-line"></div>
+    <input type="text" name="approverName" placeholder="ชื่อผู้อนุมัติ" />
+    
+  </div>
+  <div style="width: 45%; text-align: center;">
+    <label for="offererName" style="display: block; margin-top: 6px;">ผู้เสนอราคา</label>
+    <div class="signature-line"></div>
+    <input type="text" name="offererName" placeholder="ชื่อผู้เสนอราคา" />
+    
+  </div>
+</div>
+  <br><br><br><br><br>
   <button class="btn no-print" onclick="window.print()">พิมพ์ใบเสนอราคา & ดาวโหลด</button>
 
   <script src="app.js"></script>
