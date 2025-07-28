@@ -14,10 +14,13 @@
 
    
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
  <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; font-size: 16px; }
+  
+    body { font-family: 'Sarabun', sans-serif; max-width: 800px; margin: auto; padding: 20px; font-size: 16px; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
     th, td { border: 1px solid #999; padding: 8px; text-align: center; }
     th { background-color: #f0f0f0; }
@@ -31,17 +34,24 @@
       margin-bottom: 20px; }
     .logo { padding: 0;max-height: 80px; display: block; text-align: left }
     @media print {
-  input, textarea, select,btn no-print {
-    border: none !important;  /* ลบกรอบ */
+  input, textarea, select, .no-print {
+    border: none !important;
     box-shadow: none !important;
-    background: transparent !important; /* พื้นหลังโปร่งใส */
+    background: transparent !important;
   }
-    .no-print {
-      display: none !important;
-    }
-    textarea {
-      resize: none;
-    }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: transparent !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  textarea {
+    resize: none;
+  }
 }
     @media (max-width: 768px) {
       }
@@ -96,7 +106,7 @@
   border-bottom: 1px solid #ccc;
   padding: 4px 6px;
   font-size: 14px;
-  width: 70%;
+  width: 60%;
   outline: none;
   background-color: transparent;
   margin-bottom: 8px;
@@ -126,6 +136,93 @@
   color: gray;
   line-height: 40px;
 }
+td:nth-child(2) input {
+  width: 100%;
+}
+td:nth-child(3) input[type="number"],
+td:nth-child(4) input[type="number"] {
+  text-align: center;
+}
+.signature-input {
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 0;
+  background: transparent;
+  position: relative;
+}
+
+.signature-input::placeholder {
+  text-align: center;
+}
+
+/* ใส่วงเล็บครอบตอน print */
+@media print {
+  .signature-input {
+    position: relative;
+  }
+
+  .signature-input::before,
+  .signature-input::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    font-size: 16px;
+  }
+
+  .signature-input::before {
+    content: "(";
+    left: -10px;
+  }
+
+  .signature-input::after {
+    content: ")";
+    right: -10px;
+  }
+}
+.signature-wrapper {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.signature-wrapper input {
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  width: 180px;
+  padding: 2px 4px;
+  background: transparent;
+}
+
+@media print {
+  .signature-wrapper input::placeholder {
+    color: transparent;
+  }
+}
+
+.signature-wrapper .paren {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.signature-input {
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  width: 180px;
+  padding: 2px 4px;
+  background: transparent;
+}
+
   </style>
 </head>
 <body>
@@ -134,7 +231,7 @@
     <img src="ppp.jpg" class="logo" alt="โลโก้ร้าน">
     <div class="fonttext">
     <h3 class="fonttexth1">ร้านเครื่องกรองน้ำชุมแพวอเตอร์</h3>
-      <p class="fonttext" >125/2 หมู่3 บ้านไผ่กุดหิน ตำบลไชยสอ อำเภอชุมแพ จังหวัดขอนแก่น 40130</p>
+      <p class="fonttext" >125/2 หมู่ 3 บ้านไผ่กุดหิน ตำบลไชยสอ อำเภอชุมแพ จังหวัดขอนแก่น 40130</p>
       <p class="fonttext">โทร: 091-861-1138</p>
       </div>
   </div>
@@ -158,7 +255,7 @@
   <div class="left-info">
     <label>ชื่อผู้ติดต่อ: <input type="text" placeholder="นายสมชาย"></label><br>
     <label>ชื่อบริษัท: <input type="text" placeholder="บริษัท ABC จำกัด"></label><br>
-    <label>โทร: <input type="text" placeholder="081-234-5678"></label>
+    <label>โทร: <input type="text" id="phone" placeholder="081-234-5678"></label><br>
   </div>
 
   <div class="right-info">
@@ -172,12 +269,11 @@
     <thead>
       <tr>
      <th>ลำดับ</th>
-     <th>รายการ</th>
-     <th>รายละเอียด</th> 
-     <th>จำนวน</th>
-     <th>ราคาต่อหน่วย</th>
-     <th>ราคารวม</th>
-     <th class="no-print">ลบ</th>
+  <th>รายการ</th>
+  <th>จำนวน</th>
+  <th>ราคาต่อหน่วย</th>
+  <th>ราคารวม</th>
+  <th class="no-print">ลบ</th>
       </tr>
     </thead>
     <tbody id="table-body">
@@ -195,23 +291,29 @@
   <button class="btn no-print" onclick="addRow()">เพิ่มรายการ</button>
 
   
-</div>
 <div id="approval-section" style="margin-top: 40px; display: flex; justify-content: space-between;">
-  <div style="width: 45%; text-align: center;">
-    <label for="approverName" style="display: block; margin-top: 6px;">ผู้อนุมัติซื้อ</label>
-    <div class="signature-line"></div>
-    <input type="text" name="approverName" placeholder="ชื่อผู้อนุมัติ" />
-    
+  <!-- ฝั่งซ้าย: ผู้อนุมัติ -->
+  <div style="width: 35%; text-align: center;">
+    <label style="display: block; margin-bottom: 6px;">ผู้อนุมัติซื้อ</label><br><br><br>
+    <div class="signature-wrapper">
+      <span class="paren">(</span>
+      <input type="text" class="signature-input" placeholder="ชื่อผู้อนุมัติ">
+      <span class="paren">)</span>
+    </div>
   </div>
-  <div style="width: 45%; text-align: center;">
-    <label for="offererName" style="display: block; margin-top: 6px;">ผู้เสนอราคา</label>
-    <div class="signature-line"></div>
-    <input type="text" name="offererName" placeholder="ชื่อผู้เสนอราคา" />
-    
+
+  <!-- ฝั่งขวา: ผู้เสนอราคา -->
+  <div style="width: 35%; text-align: center;">
+    <label style="display: block; margin-bottom: 6px;">ผู้เสนอราคา</label><br><br><br>
+    <div class="signature-wrapper">
+      <span class="paren">(</span>
+      <input type="text" class="signature-input" placeholder="ชื่อผู้เสนอราคา">
+      <span class="paren">)</span>
+    </div>
   </div>
 </div>
   <br><br><br><br><br>
-  <button class="btn no-print" onclick="window.print()">พิมพ์ใบเสนอราคา & ดาวโหลด</button>
+  <button class="btn no-print" onclick="window.print()">พิมพ์ใบเสนอราคา & ดาวน์โหลด</button>
 
   <script src="app.js"></script>
 
